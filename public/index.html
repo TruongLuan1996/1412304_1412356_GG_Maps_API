@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #map {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
+  </head>
+  <body>
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+    <script>
+      /*function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }*/
+      var temp=[];
+      function myMap() {
+        var mapCanvas = document.getElementById("map");
+        var myCenter=new google.maps.LatLng(51.508742,-0.120850);
+        var mapOptions = {center: myCenter, zoom: 5};
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+        google.maps.event.addListener(map, 'click', function(event) {
+          placeMarker(map, event.latLng);
+
+        
+  });
+      }
+
+      function placeMarker(map, location) {
+        temp.push(location);
+        var marker = new google.maps.Marker({
+          position: location,
+          map: map
+        });
+        var infowindow = new google.maps.InfoWindow({
+          content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+        });
+         google.maps.event.addListener(marker,'click',function() {
+            var infowindow = new google.maps.InfoWindow({
+              content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+            });
+            infowindow.open(map,marker);
+            window.setTimeout(function() {infowindow.close(map,marker);},3000);
+          });
+        infowindow.open(map,marker);
+
+         var flightPath = new google.maps.Polyline({
+          path: temp,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+
+        flightPath.setMap(map);
+        window.setTimeout(function() {infowindow.close(map,marker);},3000);
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHPC8StEf5s6U4kQZklo_NawQSyV1-qhY&callback=myMap">
+    </script>
+  </body>
+</html>
