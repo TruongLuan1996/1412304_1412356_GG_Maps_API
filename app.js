@@ -5,7 +5,7 @@ var express = require('express'),
     morgan = require('morgan'),
     path = require('path'),
     wnumb = require('wnumb'),
-    handle404 = require('./middle-wares/handle-404'),
+    handle404 = require('./middle-wares/handle-404');
 
 var app = express();
 
